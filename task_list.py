@@ -1,7 +1,6 @@
 import json
-FILENAME = "tasks.txt"
-tasks = []
 
+#------------------- TASK CLASS ---------------------------
 class Task:
     def __init__(self, title, done=False):
         self.title = title
@@ -17,30 +16,58 @@ class Task:
     def from_dict(data):
         return Task(data['title'], data['done'])
         
-
-
-
-
-
-
-
-
-
-def load_tasks():
-    try:
-        with open(FILENAME, 'r') as file:
-           loaded = json.load(file)
-            for task in loaded:
-                if 'tittle' in task and 'done' in task:
-                    tasks.append(task)
-        print(f'Loaded{len(tasks)} tasks(s).')
+#--------------------- TO DO LIST CLASSS -------------------------
+class ToDoList:
+    def __init__(self, filename='tasks.json'):
+        self.filename = filename
+        self.tasks = []
+        self.load_tasks()
+        
+    def add_task(self, title):
+        task = Task (title)
+        self.tasks.append(tasks)
+        self.save_tasks()
+    	print(f"task '{title}' added")
+        
+    def view_task():
+ 	   if not self.tasks:
+    	    print("no tasks yet")
+  	  else:
+    	print('\nyour tasks')
+      	  for i, task in enumerate(self.tasks, start=1):
+       		status = '✓' if task.done else ''
+        	print(f'{i}. [{status}] {task.title}')
+            
+    def remove_task(self,index):
+        if 0 <= index < len(self.tasks):
+            removed = self.tasks.pop(index)
+            self.save_tasks()
+            print(f'removed: {removed.title}')
+        else:
+            print ('invalid index')
+            
+    def mark_completed(self, index):
+        if 0<= index< len(self.task):
+            self.task[index].mark_completed()
+            self.save_tasks()
+            print(f'marked as completed: {self.tasks[index].title}')
+        else:
+            print('invalid index.')
+            
+    def save_task(self):
+        with open(self.filename, 'w') as f:
+        jdon.dump([task.to_dict() for task in self.tasks], f)
+        
+    def load_tasks(self):
+        try:
+        	with open(self.filename, 'r') as f:
+            	data = json.load(f)
+                self.tasks = [task.from_dict(item) for item in data]
+            print(f'Loaded {len(self.tasks)} task(s).')
     except FileNotFoundError:
-       print('no saved task found. starting fresh.')
+        print('no saved tasks found. Starting Fresh.')
 
-
-def save_task():
-    with open(FILENAME, 'w') as file:
-        json.dump(tasks, file)
+#---------------------- MAIN PROGRAM -----------------------------
 
 def show_menu():
     print('\nto-do list menu:')
@@ -50,53 +77,47 @@ def show_menu():
     print('4. mark task as completed')
     print('5. Exit')
 
-
-def add_task():
-    title = input('enter a new task: ')
-    task = {'tittle': title, 'done': False}
-    tasks.append(task)
-    save_task()
-    print("task added")
-
-def view_task():
-    if not tasks:
-        print("no tasks yet")
-    else:
-        print('\nyour tasks')
-        for i, task in enumerate(tasks, start=1):
-            status = '✓' if task ['done'] else ''
-            print(f'{i}. [{status}] {task['title']}')
-
-def mark_completed():
-    view_task()
-    if not tasks:
-        return
-    try:
-        num = int(input('enter the task number to mark as completed: '))
-        if 1 <= num <= len(tasks):
-            tasks[num - 1]['done'] = True
-            save_task()
-            print(f"task '{tasks[num - 1]['title']}' marked as completed ")
+def main():
+    todo = ToDoList()
+    
+    while True:
+        show_menu()
+        choice = input('choose an option (1-5)')
+        
+        if choice == '1':
+            title = input('Enter task: ')
+            todo.add_task(title)
+            
+        elif choice == '2':
+            todo.view_tasks()
+            
+        elif choice == '3':
+         	todo.view_tasks()
+            try:
+            	index = int(input('Enter task number to remove: ')) - 1
+            	todo.remove_task(index)
+            `except ValueError:
+            	print('please enter a valid number.')
+        
+        elif choice == '4':
+        	todo.view_task()
+            try:
+            	index = int(input('Enter task number to mark as completed')) - 1
+                todo.mark_completed(index)
+            `except ValueError:
+            	print('please Enter a Valid number.')
+                
+        elif choice == '5':
+        	print('goodbye')
+            break
+            
         else:
-            print('Invalid task number.')
-    except ValueError:
-        print("please enter a valid number.")
+        	print('invalidchoice. try again.')
+            
+#----------------------- Entry Point ----------------------------
 
-
-def remove_task():
-    view_task()
-    if not tasks:
-        return
-    try:
-        num = int(input('Enter the task number to remove: '))
-        if 1 <= num <= len(tasks):
-            removed = tasks.pop(num - 1)
-            save_task()
-            print(f"Removed task: '{removed}'")
-        else:
-            print("Invalid task number")
-    except ValueError:
-        print('please enter a valid number')
+if __name__ == '__main__':
+    main()
 
 
 
@@ -104,26 +125,11 @@ def remove_task():
 
 
 
-load_tasks()
+            
+            
+            
+        	
 
-#main loop
-while True:
-    show_menu()
-    choice = input('choose an option (1-3): ')
-
-    if choice == '1':
-        add_task()
-    elif choice == '2':
-        view_task()
-    elif choice == '3':
-        remove_task()
-    elif choice == '4':
-        mark_completed()
-    elif choice == '5':
-        print('Goodbye')
-        break
-    else:
-        print('invalid choice try again')
 
 
 

@@ -2,6 +2,30 @@ import json
 FILENAME = "tasks.txt"
 tasks = []
 
+class Task:
+    def __init__(self, title, done=False):
+        self.title = title
+        self.done = True
+    
+    def mark_completed(self):
+        self.done = True
+        
+    def to_dict(self):
+        return {'title': self.title, 'done': self.done}
+        
+    @staticmethod
+    def from_dict(data):
+        return Task(data['title'], data['done'])
+        
+
+
+
+
+
+
+
+
+
 def load_tasks():
     try:
         with open(FILENAME, 'r') as file:

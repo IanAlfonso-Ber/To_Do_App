@@ -23,7 +23,8 @@ def show_menu():
     print('1. Add a task')
     print('2. View tasks')
     print('3. Remove a task')
-    print('4. Exit')
+    print('4. mark task as completed')
+    print('5. Exit')
 
 
 def add_task():
@@ -93,6 +94,8 @@ while True:
     elif choice == '3':
         remove_task()
     elif choice == '4':
+        mark_completed()
+    elif choice == '5':
         print('Goodbye')
         break
     else:

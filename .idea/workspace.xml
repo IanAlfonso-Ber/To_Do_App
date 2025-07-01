@@ -24,12 +24,20 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RESET_MODE" value="MIXED" />
   </component>
-  <component name="GitHubPullRequestSearchHistory">{
-  &quot;lastFilter&quot;: {
-    &quot;state&quot;: &quot;OPEN&quot;,
-    &quot;assignee&quot;: &quot;IanAlfonso-Ber&quot;
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "history": [
+    {
+      "state": "OPEN",
+      "assignee": "IanAlfonso-Ber",
+      "author": "IanAlfonso-Ber"
+    }
+  ],
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "IanAlfonso-Ber",
+    "author": "IanAlfonso-Ber"
   }
-}</component>
+}]]></component>
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/IanAlfonso-Ber/To_Do_App&quot;,

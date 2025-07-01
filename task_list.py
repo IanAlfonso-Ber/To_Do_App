@@ -5,8 +5,10 @@ tasks = []
 def load_tasks():
     try:
         with open(FILENAME, 'r') as file:
-            for line in file:
-                tasks.append(line.strip())
+           loaded = json.load(file)
+            for task in loaded:
+                if 'tittle' in task and 'done' in task:
+                    tasks.append(task)
         print(f'Loaded{len(tasks)} tasks(s).')
     except FileNotFoundError:
        print('no saved task found. starting fresh.')

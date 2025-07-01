@@ -1,4 +1,7 @@
 import json
+import tkinter as tk
+from tkinter import messagebox, simpledialog, mainloop
+
 
 # ------------------- TASK CLASS ---------------------------
 class Task:
@@ -73,6 +76,56 @@ class ToDoList:
             print('no saved tasks found. Starting Fresh.')
 
 
+
+#================================= UI WITH TKINTER =====================================
+
+class ToDoApp:
+    def __init__(self, root):
+        self.todo = ToDoList()
+        self.root = root
+        self.root.title("To-Do List App")
+
+        self.task_listbox = tk.Listbox(root, width=50)
+        self.task_listbox.pack(pady=10)
+
+        #buttons
+        tk.Button(root, text='Add Task', command=self.add_task).pack(pady=2)
+        tk.Button(root, text="Mark as Completed", command=self.mark_completed).pack(pady=2)
+        tk.Button(root, text="Remove Task", command=self.remove_task).pack(pady=2)
+
+        self.refresh_tasks()
+
+    def refresh_tasks(self):
+        self.task_listbox.delete(0, tk.END)
+        for i, task in enumerate(self.todo.tasks):
+            status = "✓" if task.done else " "
+            self.task_listbox.insert(tk.END, f"{i + 1}. [{status}] {task.title}")
+
+    def add_task(self):
+        title = simpledialog.askstring("Add Task", "Enter task title:")
+        if title:
+            self.todo.add_task(title)
+            self.refresh_tasks()
+
+    def mark_completed(self):
+        selection = self.task_listbox.curselection()
+        if selection:
+            index = selection[0]
+            self.todo.mark_completed(index)
+            self.refresh_tasks()
+        else:
+            messagebox.showinfo("Select Task", "Please select a task to mark as completed.")
+
+    def remove_task(self):
+        selection = self.task_listbox.curselection()
+        if selection:
+            index = selection[0]
+            self.todo.remove_task(index)
+            self.refresh_tasks()
+        else:
+            messagebox.showinfo("Select Task", "Please select a task to remove.")
+
+
 # ---------------------- MAIN PROGRAM -----------------------------
 
 def show_menu():
@@ -124,7 +177,10 @@ def main():
 # ----------------------- Entry Point ----------------------------
 
 if __name__ == '__main__':
-    main()
+    root = tk.Tk()
+    app = ToDoApp(root)
+    root,mainloop()
+
 
 
 
